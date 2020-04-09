@@ -304,7 +304,7 @@ make -s install DESTDIR="$INSTALLDIR"
 if [ -n "$(ls -A "$DOWNLOADDIR"/gdb-$GDB_VERSION/build)" ]; then rm -rf "$DOWNLOADDIR"/gdb-$GDB_VERSION/build/*; fi #cleanup
 echo "Done Building Cross GDB Binaries..."
 
-mv "$BUILDDIR"/cross-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION "$HOME"
+mv "$BUILDDIR"/cross-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION /tmp/toolchain
 cd "$HOME" || exit
 #compress with maximum possible compression level.
 tar cf - cross-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION | pigz -9 > cross-gcc-"$GCC_VERSION"-pi_"$RPI_TYPE".tar.gz 

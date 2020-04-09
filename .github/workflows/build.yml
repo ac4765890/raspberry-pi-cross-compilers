@@ -30,6 +30,7 @@ jobs:
       - name: Prepare build
         run: |
           sudo -E mkdir /tmp/build
+          sudo -E mkdir /tmp/toolchain
           cd ./buildScript/build-scripts/ && sudo -E chmod +x ./RTBuilder_32b
       
       - name: Build
@@ -42,5 +43,5 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: toolchain
-          path: $HOME/*.tar.gz
+          path: /tmp/toolchain
          
