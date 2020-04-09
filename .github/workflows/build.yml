@@ -42,5 +42,5 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: toolchain
-          path: /tmp/build/
+          path: /tmp/build/cross-pi-gcc-8.3.0-2
          
