@@ -35,7 +35,6 @@ jobs:
       - name: Build
         id: build
         run: |
-          sudo rm -rf ~
           BUILDDIR="/tmp/build"
           cd ./buildScript/build-scripts/ && sudo ./RTBuilder_32b -g "8.3.0" -r "3+" -o "buster"
           
@@ -43,5 +42,5 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: toolchain
-          path: ~
+          path: ~/*.tar.gz
          
