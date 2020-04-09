@@ -224,7 +224,7 @@ mkdir -p "$SYSROOTDIR"/usr/lib
 echo "Building binutils..."
 if [ -n "$(ls -A "$DOWNLOADDIR"/binutils-$BINUTILS_VERSION/build)" ]; then rm -rf "$DOWNLOADDIR"/binutils-$BINUTILS_VERSION/build/*; fi
 cd "$DOWNLOADDIR"/binutils-$BINUTILS_VERSION/build || exit
-../configure --target=$TARGET --prefix= --with-arch=$ARCH  --with-fpu=$FPU --with-float=hard --disable-multilib
+../configure --target=$TARGET --prefix= --with-arch=$ARCH  --with-fpu=$FPU --with-float=hard --disable-multilib --with-sysroot=/$TARGET/libc
 make -s -j$(nproc)
 make -s install DESTDIR="$INSTALLDIR"
 if [ -n "$(ls -A "$DOWNLOADDIR"/binutils-$BINUTILS_VERSION/build)" ]; then rm -rf "$DOWNLOADDIR"/binutils-$BINUTILS_VERSION/build/*; fi
@@ -298,7 +298,7 @@ cat gcc/limitx.h gcc/glimits.h gcc/limity.h > $(dirname $($TARGET-gcc -print-lib
 echo "Building Cross GDB Binaries..."
 cd "$DOWNLOADDIR"/gdb-$GDB_VERSION/build || exit
 if [ -n "$(ls -A "$DOWNLOADDIR"/gdb-$GDB_VERSION/build)" ]; then rm -rf "$DOWNLOADDIR"/gdb-$GDB_VERSION/build/*; fi #cleanup
-../configure --prefix= --target=$TARGET --with-arch=$ARCH  --with-fpu=$FPU --with-float=hard
+../configure --prefix= --target=$TARGET --with-arch=$ARCH  --with-fpu=$FPU --with-float=hard --with-sysroot=/$TARGET/libc
 make -s -j$(nproc)
 make -s install DESTDIR="$INSTALLDIR"
 if [ -n "$(ls -A "$DOWNLOADDIR"/gdb-$GDB_VERSION/build)" ]; then rm -rf "$DOWNLOADDIR"/gdb-$GDB_VERSION/build/*; fi #cleanup
