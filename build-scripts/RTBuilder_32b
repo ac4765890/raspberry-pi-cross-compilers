@@ -110,7 +110,7 @@ fi
 if [ "$BUILDDIR" = "" ]; then
 	#select temp directory as default
 	echo "Build directory is empty, using temp directory!"
-	BUILDDIR=$(dirname "$(mktemp tmp.XXXXXXXXXX -ut)")
+	BUILDDIR="/tmp/build"
 fi
 
 #collect programming languages if not defined
