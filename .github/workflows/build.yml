@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build cross-8.3.0-raspberry3+-burst
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: cross-8.3-sysroot
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    
+    steps:
+      - name: Prepare environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo swapoff /swapfile
+          sudo rm -rf /swapfile /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo -E apt-get -qq update
+          sudo -E apt-get -y install gcc g++ gperf flex texinfo gawk gfortran texinfo bison build-essential openssl unzip wget git pigz libncurses-dev autoconf automake tar figlet
+          
+      - name: Clone source file
+        run: git clone --depth 1 https://github.com/ac4765890/raspberry-pi-cross-compilers.git -b cross-8.3-sysroot buildScript
+      
+      - name: Prepare build
+        run: |
+          sudo -E mkdir /tmp/build
+          cd ./buildScript/build-scripts/ && sudo -E chmod +x ./RTBuilder_32b
+      
+      - name: Build
+        id: build
+        run: |
+          export BUILDDIR=/tmp/build
+          cd ./buildScript/build-scripts/ && ./RTBuilder_32b -g "8.3.0" -r "3+" -o "buster"
+          
+      - name: Deploy
+        if: steps.build.outputs.status == 'success'
+        uses: actions/upload-artifact@master
+        with:
+          name: toolchain
+          path: /tmp/build
+         
