@@ -36,7 +36,7 @@ jobs:
         id: build
         run: |
           export BUILDDIR=/tmp/build
-          cd ./buildScript/build-scripts/ && ./RTBuilder_32b -g "8.3.0" -r "3+" -o "buster"
+          cd ./buildScript/build-scripts/ && sudo ./RTBuilder_32b -g "8.3.0" -r "3+" -o "buster"
           
       - name: Deploy
         if: steps.build.outputs.status == 'success'
